@@ -35,9 +35,9 @@ HelloTPN::HelloTPN()
     : nh{"~"},
       limiter(10)
 {
-    gps_pos_sub = nh.subscribe<libsbp_ros_msgs::MsgPosLlh>("/reference/rover/piksi/position_receiver_0/sbp/pos_llh", 4, &HelloTPN::positionCallback, this);
-    gps_heading_sub = nh.subscribe<libsbp_ros_msgs::MsgBaselineHeading>("/attitude/rover/piksi/attitude_receiver_0/sbp/baseline_heading", 4, &HelloTPN::headingCallback, this);
-    gps_vel_sub = nh.subscribe<geometry_msgs::TwistStamped>("/vehicle/twist", 4, &HelloTPN::velocityCallback, this);
+    gps_pos_sub = nh.subscribe<libsbp_ros_msgs::MsgPosLlh>("/reference/actor1/piksi/position_receiver_0/sbp/pos_llh", 4, &HelloTPN::positionCallback, this);
+    gps_heading_sub = nh.subscribe<libsbp_ros_msgs::MsgBaselineHeading>("/attitude/actor1/piksi/attitude_receiver_0/sbp/baseline_heading", 4, &HelloTPN::headingCallback, this);
+    gps_vel_sub = nh.subscribe<geometry_msgs::TwistStamped>("/actor1/vehicle/twist", 4, &HelloTPN::velocityCallback, this);
 
 }
 
@@ -61,22 +61,22 @@ void HelloTPN::positionCallback(const libsbp_ros_msgs::MsgPosLlh::ConstPtr& msg)
     libsbp_ros_msgs::MsgPosLlh llh = *msg;
     this->pos.lat = llh.lat;
     this->pos.lon = llh.lon;
-    ROS_ERROR_STREAM("positionCallback -- lat: " << this->pos.lat << " lon: " << this->pos.lon);
+    std::cout << "positionCallback -- latitude: " << this->pos.lat << " longitude: " << this->pos.lon;
 }
 
 void HelloTPN::headingCallback(const libsbp_ros_msgs::MsgBaselineHeading::ConstPtr& msg)
 {
     libsbp_ros_msgs::MsgBaselineHeading baseline_heading = *msg;
     this->pos.heading = baseline_heading.heading / 1000; 
-    ROS_ERROR_STREAM("headingCallback -- heading: " << this->pos.heading);
+    std::cout << "headingCallback -- heading: " << this->pos.heading;
 }
 
 void HelloTPN::velocityCallback(const geometry_msgs::TwistStamped::ConstPtr& msg) {
     geometry_msgs::Twist vel = msg->twist;
     this->pos.angZ = vel.angular.z;
     this->pos.velocity = vel.linear.x;
-    ROS_ERROR_STREAM("velocityCallback -- velocity: " << this->pos.velocity);
-    ROS_ERROR_STREAM("velocityCallback -- angularZ: " << this->pos.angZ);
+    std::cout << "velocityCallback -- velocity: " << this->pos.velocity;
+    std::cout << "velocityCallback -- angularZ: " << this->pos.angZ;
 }
 
 int main(int argc, char **argv)

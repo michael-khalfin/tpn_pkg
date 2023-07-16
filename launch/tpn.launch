@@ -6,16 +6,21 @@
       <group ns="reference">
          <include file="$(find piksi_multi_cpp)/launch/rover.launch">
             <arg name="device_ids" value="tcp://192.168.0.222:55555" />
+            <arg name="ns" value="actor1" />
          </include>
       </group>
 
       <group ns="attitude">
          <include file="$(find piksi_multi_cpp)/launch/rover.launch">
             <arg name="device_ids" value="tcp://192.168.0.223:55555" />
+            <arg name="ns" value="actor1" />
          </include>
       </group>
 
    <!-- Launch program node -->
-   <node pkg="tpn_pkg" type="tpn_node" name="tpn_node" />  
+   <group ns="actor1">
+      <include file="$(find dbw_polaris_can)/launch/dbw.launch" />
+      <node pkg="tpn_pkg" type="tpn_node" name="tpn_node" />  
+   </group>
 
 </launch>
