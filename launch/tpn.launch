@@ -1,5 +1,5 @@
 <launch>
-<!-- J Dombecki -->
+<!-- M Khalfin -->
    
    <!-- GPS system -->
       <!-- ACTor1 -->
@@ -18,7 +18,7 @@
       </group>
 
    <!-- Launch program node -->
-   <group ns="actor1">
+   <group ns="actor1"> <!-- Make sure to insert the unique ACTor vehicle ID here -->
       <include file="$(find dbw_polaris_can)/launch/dbw.launch" />
       <node pkg="tpn_pkg" type="tpn_node" name="tpn_node" />  
    </group>

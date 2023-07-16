@@ -24,9 +24,6 @@ private:
     ros::Subscriber gps_heading_sub;
     ros::Subscriber gps_vel_sub;
     ros::Publisher gps_pub = nh.advertise<tpn_pkg::Position>("gps_chatter", 10);
-    //ros::Publisher bool_pub = nh.advertise<std_msgs::Bool>("bool_topic", 10);
-
-    //ros::Publisher gps_pub;
 
     ros::Rate limiter;
 };
@@ -45,12 +42,7 @@ void HelloTPN::run()
 {
     while (ros::ok())
     {
-        //ROS_ERROR_STREAM("PUBLISHING");
         gps_pub.publish(this->pos);
-        
-        // std_msgs::Bool test = std_msgs::Bool();
-        // test.data = true;
-        // bool_pub.publish(test);
         ros::spinOnce();
         limiter.sleep();
     }
